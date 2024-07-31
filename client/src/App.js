@@ -54,7 +54,7 @@ function App() {
 	}
 
 	return (
-		<div className="App">
+		<div className="App"> 
 			<h1>Welcome, User</h1>
 			<h4>Your tasks</h4>
 
