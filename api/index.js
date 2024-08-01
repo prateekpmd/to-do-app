@@ -43,9 +43,7 @@ app.post("/todo/new", (req, res) => {
     text: req.body.text,
   });
 
-  todo.save();
-
-  res.json(todo);
+  todo.save().then(() => res.json(todo)).catch(err => res.status(400).json(err));
 });
 
 app.delete("/todo/delete/:id", async (req, res) => {
