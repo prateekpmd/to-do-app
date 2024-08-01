@@ -38,7 +38,7 @@ app.get("/todos", async (req, res) => {
   res.json(todos);
 });
 
-app.post("/todo/new", (req, res) => {
+app.post("/todo/new", async (req, res) => {
   const todo = new Todo({
     text: req.body.text,
   });
@@ -57,9 +57,7 @@ app.get("/todo/complete/:id", async (req, res) => {
 
   todo.complete = !todo.complete;
 
-  todo.save();
-
-  res.json(todo);
+  todo.save().then(() => res.json(todo)).catch(err => res.status(400).json(err));
 });
 
 app.put("/todo/update/:id", async (req, res) => {
@@ -67,9 +65,7 @@ app.put("/todo/update/:id", async (req, res) => {
 
   todo.text = req.body.text;
 
-  todo.save();
-
-  res.json(todo);
+  todo.save().then(() => res.json(todo)).catch(err => res.status(400).json(err));
 });
 
 const PORT = process.env.PORT || 3001;
