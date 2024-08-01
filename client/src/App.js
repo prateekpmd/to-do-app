@@ -41,9 +41,17 @@ function App() {
       body: JSON.stringify({
         text: newTodo,
       }),
-    }).then((res) => res.json());
+    });
 
-    setTodos([...todos, data]);
+    if (!data.ok) {
+      throw new Error("Network response was not ok");
+    }
+    
+    // Parse the JSON response
+    const result = await data.json();
+    
+    // Update the state with the new todo item
+    setTodos((todos) => [...todos, result]);
 
     setPopupActive(false);
     setNewTodo("");
