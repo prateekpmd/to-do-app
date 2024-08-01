@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-const api_base = 'https://money-tracker-simple-mern.vercel.app';
+const api_base = 'https://to-do-app-theta-flax.vercel.app';
 
 function App() {
 	const [todos, setTodos] = useState([]);
