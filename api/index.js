@@ -21,6 +21,9 @@ mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 60000,
+    poolSize:10,
+    family:4
   })
   .then(() => console.log("Connected to MongoDB"))
   .catch(console.error);
