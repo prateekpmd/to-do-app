@@ -54,12 +54,12 @@ app.post("/todo/new", async (req, res) => {
       .then(() => res.json(todo))
       .catch((err) => res.status(400).json(err));
   } catch (error) {
-    res.status(500).json({ message: "Couldnt add" });
+    res.status(500).json({ message: "Couldnt Add New Todo" });
   }
 });
 
 app.delete("/todo/delete/:id", async (req, res) => {
-  try {
+  try { 
     const result = await Todo.findByIdAndDelete(req.params.id);
 
     if (!result) {
