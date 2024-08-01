@@ -1,8 +1,7 @@
-require("dotenv").config({ path: '../.env' }); 
+require("dotenv").config({ path: "../.env" });
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
 
 // Models
 const Todo = require("./models/Todo");
@@ -22,8 +21,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 60000,
-    poolSize:10,
-    family:4
+    poolSize: 10,
+    family: 4,
   })
   .then(() => console.log("Connected to MongoDB"))
   .catch(console.error);
@@ -33,39 +32,81 @@ app.get("/", (req, res) => {
 });
 
 app.get("/todos", async (req, res) => {
-  const todos = await Todo.find();
-
-  res.json(todos);
+  app.get("/todos", async (req, res) => {
+    try {
+      const todos = await Todo.find();
+      res.json(todos);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server Error" });
+    }
+  });
 });
 
 app.post("/todo/new", async (req, res) => {
-  const todo = new Todo({
-    text: req.body.text,
-  });
+  try {
+    const todo = new Todo({
+      text: req.body.text,
+    });
 
-  todo.save().then(() => res.json(todo)).catch(err => res.status(400).json(err));
+    todo
+      .save()
+      .then(() => res.json(todo))
+      .catch((err) => res.status(400).json(err));
+  } catch (error) {
+    res.status(500).json({ message: "Couldnt add" });
+  }
 });
 
 app.delete("/todo/delete/:id", async (req, res) => {
-  const result = await Todo.findByIdAndDelete(req.params.id);
+  try {
+    const result = await Todo.findByIdAndDelete(req.params.id);
 
-  res.json({ result });
+    if (!result) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
+
+    res.json({ result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
 });
 
 app.get("/todo/complete/:id", async (req, res) => {
-  const todo = await Todo.findById(req.params.id);
+  try {
+    const todo = await Todo.findById(req.params.id);
 
-  todo.complete = !todo.complete;
+    if (!todo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
 
-  todo.save().then(() => res.json(todo)).catch(err => res.status(400).json(err));
+    todo.complete = !todo.complete;
+
+    await todo.save();
+    res.json(todo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
 });
 
 app.put("/todo/update/:id", async (req, res) => {
-  const todo = await Todo.findById(req.params.id);
+  try {
+    const todo = await Todo.findById(req.params.id);
 
-  todo.text = req.body.text;
+    if (!todo) {
+      return res.status(404).json({ message: "Todo not found" });
+    }
 
-  todo.save().then(() => res.json(todo)).catch(err => res.status(400).json(err));
+    todo.text = req.body.text;
+
+    const updatedTodo = await todo.save();
+    res.json(updatedTodo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
 });
 
 const PORT = process.env.PORT || 3001;
