@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-const api_base = 'https://to-do-app-theta-flax.vercel.app';
 
 function App() {
 	const [todos, setTodos] = useState([]);
@@ -11,14 +10,14 @@ function App() {
 	}, []);
 
 	const GetTodos = () => {
-		fetch(api_base + '/todos')
+		fetch(process.env.REACT_APP_API_URL + '/todos')
 			.then(res => res.json())
 			.then(data => setTodos(data))
 			.catch((err) => console.error("Error: ", err));
 	}
 
 	const completeTodo = async id => {
-		const data = await fetch(api_base + '/todo/complete/' + id).then(res => res.json());
+		const data = await fetch(process.env.REACT_APP_API_URL + '/todo/complete/' + id).then(res => res.json());
 
 		setTodos(todos => todos.map(todo => {
 			if (todo._id === data._id) {
@@ -31,7 +30,7 @@ function App() {
 	}
 
 	const addTodo = async () => {
-		const data = await fetch(api_base + "/todo/new", {
+		const data = await fetch(process.env.REACT_APP_API_URL + "/todo/new", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json" 
@@ -48,7 +47,7 @@ function App() {
 	}
 
 	const deleteTodo = async id => {
-		const data = await fetch(api_base + '/todo/delete/' + id, { method: "DELETE" }).then(res => res.json());
+		const data = await fetch(process.env.REACT_APP_API_URL+ '/todo/delete/' + id, { method: "DELETE" }).then(res => res.json());
 
 		setTodos(todos => todos.filter(todo => todo._id !== data.result._id));
 	}

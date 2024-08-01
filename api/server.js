@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 const corsOptions = {
-	origin: 'https://to-do-app-theta-flax.vercel.app', // Replace with your actual frontend URL
+	origin: process.env.REACT_APP_API_URL, // Replace with your actual frontend URL
 	optionsSuccessStatus: 200 // Some legacy browsers choke on 204
   };
   
@@ -68,6 +68,7 @@ app.put('/todo/update/:id', async (req, res) => {
 	res.json(todo);
 });
 
-app.listen(process.env.PORT_NO, () => {
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
 	console.log('Server is running on port 3001');
   });
