@@ -10,7 +10,7 @@ function App() {
   }, []);
 
   const GetTodos = async () => {
-    fetch(process.env.REACT_APP_API_URL + "/todos")
+    await fetch(process.env.REACT_APP_API_URL + "/todos")
       .then((res) => res.json())
       .then((data) => setTodos(data))
       .catch((err) => console.error("Error: ", err));
