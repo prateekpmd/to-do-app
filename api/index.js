@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 const corsOptions = {
-  origin: process.env.REACT_APP_API_URL, // Replace with your actual frontend URL
+  origin:process.env.FRONTEND_URL, // Replace with your actual frontend URL
   optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
 
