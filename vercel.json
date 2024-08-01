@@ -1,0 +1,32 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "client/package.json",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "build"
+        }
+      },
+      {
+        "src": "api/index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "/api/index.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/client/build/$1"
+      }
+    ],
+    "env": {
+        "PORT":3001,
+      "MONGO_URI": "mongodb+srv://patrickviera9:2mn2qQbVpS9xCGyk@cluster0.qa9m6lm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+      "REACT_APP_API_URL":"https://to-do-app-theta-flax.vercel.app"
+    }
+  }
+  
