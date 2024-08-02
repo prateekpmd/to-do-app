@@ -34,17 +34,18 @@ app.get("/", (req, res) => {
   res.json("welcome");
 });
 
-app.get("/todos", async (req, res) => {
+
   app.get("/todos", async (req, res) => {
     try {
       const todos = await Todo.find();
+      console.log(todos);
       res.json(todos);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Server Error" });
     }
   });
-});
+
 
 app.post("/todo/new", async (req, res) => {
   try {
