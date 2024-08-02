@@ -6,15 +6,26 @@ function App() {
   const [newTodo, setNewTodo] = useState("");
 
   useEffect(() => {
-    GetTodos();
-  }, []);
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch(process.env.REACT_APP_API_URL + "/todos", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setTodos(data);
+      } catch (err) {
+        console.error("Error fetching todos:", err);
+      }
+    };
 
-  const GetTodos = async () => {
-    await fetch(process.env.REACT_APP_API_URL + "/todos")
-      .then((res) => res.json())
-      .then((data) => setTodos(data))
-      .catch((err) => console.error("Error: ", err));
-  };
+    fetchTodos();
+  }, []);
 
   const completeTodo = async (id) => {
     const data = await fetch(
