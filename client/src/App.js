@@ -8,12 +8,7 @@ function App() {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_URL + "/todos", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(process.env.REACT_APP_API_URL + "/todos");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
