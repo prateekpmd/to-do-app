@@ -12,6 +12,9 @@ app.use(express.json());
 const corsOptions = {
   origin:process.env.FRONTEND_URL, // Replace with your actual frontend URL
   optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+  methods: 'GET,POST,PUT,DELETE', // Specify allowed methods as needed
+   credentials: true, // If your frontend needs to send cookies or credentials with the request
+   allowedHeaders: 'Content-Type,Authorization', // Specify allowed headers
 };
 
 app.use(cors(corsOptions));
