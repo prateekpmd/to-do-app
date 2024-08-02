@@ -159,7 +159,8 @@ h4 {
 .button {
 	padding: 16px 32px;
 	border-radius: 999px;
-	background-image: linear-gradient(to right, var(--primary), var(--secondary));
+	background-color: black;
+	color: white;
 	display: inline-block;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -168,3 +169,7 @@ h4 {
 	text-align: center;
 	cursor: pointer;
 }
+.button:hover {
+	background-color: grey;
+	color: white;
+  }
