@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js"
   },
-  "author": "Tyler Potts",
+  "author": "Prateek Premanand",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
